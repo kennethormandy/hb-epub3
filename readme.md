@@ -2,6 +2,8 @@
 
 A Harp boilerplate for generating EPUB3 ebooks.
 
+![An example made using this boilerplate.](https://raw.github.com/kennethormandy/hb-epub3/master/example.jpg)
+
 ## Get started
 
 1. Install Harp
