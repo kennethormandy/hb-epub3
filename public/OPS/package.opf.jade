@@ -1,0 +1,77 @@
+!!! xml
+package(version="3.0", unique-identifier="pub-id", xmlns="http://www.idpf.org/2007/opf", prefix="rendition: http://www.idpf.org/vocab/rendition/#     ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/")
+  metadata(xmlns:dc="http://purl.org/dc/elements/1.1/")
+
+    //- File Info 
+    dc:format application/epub+zip
+
+    //- UUID 
+    dc:identifier#pub-id= uuid
+    meta(refines="#pub-id", property="identifier-type", scheme="xsd:string") uuid
+
+    //- ISBN for EPUB version 
+    dc:identifier#isbn-id= isbn.epub
+    meta(refines="#isbn-id", property="identifier-type", scheme="onix:codelist5") 15
+
+    //- ISBN for Print version this book is derived from 
+    dc:source#src-id= isbn.print
+    meta(refines="#src-id", property="identifier-type", scheme="onix:codelist5") 15
+    meta(property="dcterms:modified")= isbn.modified
+
+    //- Book Info
+    dc:title#title= title
+    meta(refines="#title", property="file-as")= fileAs
+    meta(refines="#title", property="title-type") main
+    meta(refines="#title", property="display-seq") 1
+
+    dc:description= description
+    dc:subject= subject
+    dc:language= lang
+    dc:date= date
+
+    //- Author Info 
+    dc:creator#author= author.name
+    meta(refines="#author", property="file-as")= author.fileAs || author.name
+    meta(refines="#author", property="role", scheme="marc:relators") aut
+
+    //- Still need to iterate over contributors
+
+    //- Publisher Info
+    dc:publisher#publisher The Publisher
+    meta(refines="#publisher", property="file-as")= publisher.name
+    meta(refines="#publisher", property="role", scheme="marc:relators") pbl
+    dc:rights= publisher.rights
+
+    meta(name="cover", content="coverimage")
+
+    //- Set book version. [major].[minor].[bugfix]
+    meta(property="ibooks:version")= version
+    //- Enable custom fonts (via @font-face). 
+    meta(property="ibooks:specified-fonts")= fonts
+    //- reflowable vs pre-paginated
+    meta(property="rendition:layout") reflowable
+    //- Set spread behaviour when opening. (auto|both)/none
+    meta(property="rendition:spread") none
+    //- Set portrait or landscape orientation-lock auto/portrait/landscape
+    meta(property="rendition:orientation") auto
+    //- portrait-only/landscape-only/none
+    meta(property="ibooks:iphone-orientation-lock") none
+    meta(property="ibooks:ipad-orientation-lock") none
+
+  manifest
+    //- Book
+    item#book-cover(media-type="application/xhtml+xml", href="book/cover.html")
+    item#book-toc(media-type="application/xhtml+xml", href="book/table-of-contents.html", properties="nav")
+    item#book-content(media-type="application/xhtml+xml", href="book/content.html")
+    //- CSS 
+    item#css-main(media-type="text/css", href="css/main.css")
+    //- FONTS
+    each item in public.OPS.css.fonts.contents
+      item(media-type="application/#{ item.split(".")[1] === 'woff' ? 'font-woff' : 'x-font-' + item.split(".")[1] }", href="css/fonts/#{ item }", id="font-#{ item.replace(".", "-") }")
+    //- Images 
+    each item in public.OPS.images.contents
+      item(media-type="image/#{ item.split(".")[1] === 'jpg' ? 'jpeg' : item.split(".")[1] }", href="images/#{ item }", id="#{ item.replace(".", "-") }", properties="#{ item.split(".")[0] === 'cover' ? 'cover-image' : item.split(".")[0] }")
+  spine
+    itemref(idref="book-cover", linear="no")
+    itemref(idref="book-toc")
+    itemref(idref="book-content")

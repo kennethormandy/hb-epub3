@@ -1,44 +1,55 @@
-EPUB 3 Boilerplate
-==================
-An EPUB 3.0 template to help you get started with your ebook. (Includes iBooks display options.)  
-http://git.io/epub3-boilerplate
+# hb-epub3
 
----
+A Harp boilerplate for generating EPUB3 ebooks.
 
+## Get started
 
-# Structure of an EPUB file
+1. Install Harp
 
-    ▾ /
-      ▾ META-INF/
-        ▪ container.xml
-      ▪ mimetype
-      ▾ OPS/ (Open Publishing Structure)
-        ▾ book/
-          ▪ content.html
-          ▪ cover.html
-          ▪ title.html
-          ▪ table-of-contents.html
-          ▪ table-of-contents.ncx
-        ▾ css/
-          ▪ style.css
-        ▾ fonts/
-          ▪ fonts.css
-          ▪ someawesomefont.woff
-        ▾ images/
-          ▪ cover.jpg
-        ▪ package.opf
+  This boilerplate is for Harp, the static web server with built-in preprocessing. [Harp](http://harpjs.com) can flatten the preprocessed code—in this case, Jade, Stylus and Markdown—to HTML & CSS. Then, it can easily be turned into a `.epub` file.
 
+  Install Harp globally:
 
-# How To Use
+  ```ssh
+  sudo npm install harp -g
+  ```
 
-As the author of this template I myself have used it a lot already and everytime I find something new I need in a book, I add it to this template. So, what I suggest you do is you really start fresh, creating a new folder and adding only what you need, otherwise I find it tough to keep track of what you have changed, added or deleted. Have fun coding!
+2. Clone this boilerplate
 
+  Next, clone this boilerplate.
 
-# Helpful Resources
+  ```ssh
+  git clone https://github.com/kennethormandy/hb-epub3 ebook
+  cd ebook
+  ```
 
-- [Accessibility Guidelines](http://idpf.org/accessibility/guidelines/nav.php)
-  - [Quality Assurance Checklist](http://idpf.org/accessibility/guidelines/content/qa/qa-checklist.php)
-  - [XHTML Accessibility Guidlines](http://idpf.org/accessibility/guidelines/content/xhtml/nav.php)
-    - [Sectioning your Book (Parts, Chapters, etc.)](http://idpf.org/accessibility/guidelines/content/xhtml/sections.php)
-    - [Creating the Table of Contents Files](http://idpf.org/accessibility/guidelines/content/xhtml/toc.php)
-- [Creating a Read-Aloud iBook with Text-Highlightning](http://futurejones.com/easyepub/tutorials/read-aloud-text-highlighting/)
+3. Compile your `.epub` using Harp
+
+  Then, using the OS’ `zip` command, the generated folder can be compressed into a valid `.epub` file.
+
+  ```ssh
+  harp compile . ebook; cd ebook; zip -X0 \../ebook.epub mimetype; zip -rDX9 \../ebook.epub * -x "*.DS_Store" -x mimetype; cd \../
+  ```
+
+  Now, if you want to make some quick changes and just view them in the browser, you can serve a locally:
+
+  ```ssh
+  harp server
+  # The content is now visible at http://harp.nu:9000/OPS/book/content
+  ```
+
+## Todo
+
+- [ ] Properly support everything listed in `harp.json`
+- [ ] Further improve typographic defaults
+- [ ] Automatically use any Markdown in `_content/`
+- [ ] Restore text sizing in iBooks
+- [ ] Run against accessibility checklist
+
+## Works Cited
+
+* [Candide by Voltaire, via Project Gutenberg](http://www.gutenberg.org/ebooks/19942)
+* [reitermarkus/epub3-boilerplate](https://github.com/reitermarkus/epub3-boilerplate)
+* [javierarce/epub-boilerplate](https://github.com/javierarce/epub-boilerplate)
+* [Saolee/epub-boilerplate](https://github.com/Saolee/epub-boilerplate)
+* [mattharrison/epub-css-starter-kit](https://github.com/mattharrison/epub-css-starter-kit)

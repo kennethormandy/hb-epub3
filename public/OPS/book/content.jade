@@ -1,0 +1,14 @@
+//-
+  section(epub:type="preamble")
+section(epub:type="part")
+  h1#p1
+  section#c1.chap(epub:type="chapter")
+      span.chap-num I
+      != partial("_content/1")
+      aside#ftn1(epub:type="footnote")
+        p The name Pangloss is derived from two Greek words signifying “all” and “language.”
+  section#c2.chap(epub:type="chapter")
+      span.chap-num II
+      != partial("_content/2")
+      aside#ftn2(epub:type="footnote")
+        p The Abares were a tribe of Tartars settled on the shores of the Danube, who later dwelt in part of Circassia.

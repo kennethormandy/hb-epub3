@@ -1,57 +1,66 @@
 @charset "utf-8";
-
-@import '../fonts/fonts.css';
-
-@namespace epub 'http://www.idpf.org/2007/ops';
-
-/* Remove margin for WebKit-based reading systems.
-*/
-body {
-  margin: 0;
+namespace{epub:"http://www.idpf.org/2007/ops"}
+@font-face{font-family:"Leitura News";src:url("fonts/leitura-news-roman.woff") format("woff"),url("fonts/leitura-news-roman.ttf") format("truetype");font-weight:400;font-style:normal}
+@font-face{font-family:"Leitura News";src:url("fonts/leitura-news-italic.woff") format("woff"),url("fonts/leitura-news-italic.ttf") format("truetype");font-weight:400;font-style:italic}
+@font-face{font-family:"Leitura News SC";src:url("fonts/leitura-news-roman-sc.woff") format("woff"),url("fonts/leitura-news-roman-sc.ttf") format("truetype");font-weight:400;font-style:normal}
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+html{font-family:serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:400}
+h1,h2,h3,h4,h5,h6{font-weight:400;-webkit-hyphens:none;-moz-hyphens:none;hyphens:none;margin:0;line-height:1.1}
+abbr[title]{border-bottom:none}
+dfn{font-style:italic}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+figure{margin:0}
+table{border-collapse:collapse;border-spacing:0}
+body{font-family:"Leitura News",Georgia;-webkit-font-feature-settings:"onum","liga","kern";-moz-font-feature-settings:"onum","liga","kern";-ms-font-feature-settings:"onum","liga","kern";-o-font-feature-settings:"onum","liga","kern";font-feature-settings:"onum","liga","kern";font-size:1.3125em/1.5;line-height:1.5;max-width:36rem;margin:2em auto;text-rendering:optimizeLegibility;color:#000;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+@media (min-width: 24rem){body{font-size:1.3125em}
+}h1,h2,h3{-webkit-font-feature-settings:"onum","liga","dlig","calt","swsh","kern";-moz-font-feature-settings:"onum","liga","dlig","calt","swsh","kern";-ms-font-feature-settings:"onum","liga","dlig","calt","swsh","kern";-o-font-feature-settings:"onum","liga","dlig","calt","swsh","kern";font-feature-settings:"onum","liga","dlig","calt","swsh","kern"}
+sup{-webkit-font-feature-settings:"tnum","lnum","liga","sups","kern";-moz-font-feature-settings:"tnum","lnum","liga","sups","kern";-ms-font-feature-settings:"tnum","lnum","liga","sups","kern";-o-font-feature-settings:"tnum","lnum","liga","sups","kern";font-feature-settings:"tnum","lnum","liga","sups","kern"}
+sub{-webkit-font-feature-settings:"tnum","lnum","liga","subs","kern";-moz-font-feature-settings:"tnum","lnum","liga","subs","kern";-ms-font-feature-settings:"tnum","lnum","liga","subs","kern";-o-font-feature-settings:"tnum","lnum","liga","subs","kern";font-feature-settings:"tnum","lnum","liga","subs","kern"}
+abbr,.sc,.chap-num{font-family:"Leitura News SC"}
+@supports ((-webkit-font-feature-settings: "smcp" and -webkit-font-feature-settings: "c2sc") or (-moz-font-feature-settings: "smcp" and -moz-font-feature-settings: "c2sc") or (font-feature-settings: "smcp" and font-feature-settings: "c2sc")) {
+  abbr, .sc {
+    font-family: $font-family-serif;
+    -webkit-font-feature-settings: "smcp", "c2sc", "liga", "case", "kern";
+    -moz-font-feature-settings: "smcp", "c2sc", "liga", "case", "kern";
+    font-feature-settings: "smcp", "c2sc", "liga", "case", "kern";
+  }
 }
-
-/*  Disable hyphenation for headings to avoid single-syllable-lines.
-*/
-h1,
-h2 {
-	  -epub-hyphens: none;
-  -webkit-hyphens: none;
-     -moz-hyphens: none;
-          hyphens: none;
+a{color:inherit;text-decoration:none}
+a[epub|type~="noteref"]:after{line-height:normal;content:"1";vertical-align:super;display:inline;color:#000;-webkit-font-feature-settings:"onum","pnum";-moz-font-feature-settings:"onum","pnum";-ms-font-feature-settings:"onum","pnum";-o-font-feature-settings:"onum","pnum";font-feature-settings:"onum","pnum"}
+@supports ((-webkit-font-feature-settings: "sups") or (-moz-font-feature-settings: "sups") or (font-feature-settings: "sups")) {
+  a[epub|type~="noteref"]:after {
+    font-family: $font-family-serif;
+    vertical-align: baseline;
+    -webkit-font-feature-settings: "onum", "pnum", "sups";
+    -moz-font-feature-settings: "onum", "pnum", "sups";
+    font-feature-settings: "onum", "pnum", "sups";
+  }
 }
-
-/* Set the minimum amount of lines to show up on a seperate page. (There is not much support for this at the moment.)
-*/
-p,
-blockquote {
-  orphans: 2;
-  widows: 2;
-}
-
-/*  Turn on hyphenation for paragraphs and captions only.
-*/
-p,
-figcaption {
-	  -epub-hyphens: auto;
-  -webkit-hyphens: auto;
-     -moz-hyphens: auto;
-          hyphens: auto;
-}
-
-/*  Shortcodes for page-break rules.
-    Use data attributes to designate if and how the page should be broken before, inside or after an element.
-*/
-h1, h2, h3, h4, h5, h6,
-table, img, figure, video,
-[data-page-break~=inside][data-page-break~=avoid] { page-break-inside:  avoid; }
-[data-page-break~=after]                          { page-break-after:  always; }
-h1, h2, h3, h4, h5, h6,
-[data-page-break~=after][data-page-break~=avoid]  { page-break-after:   avoid; }
-[data-page-break~=before]                         { page-break-before: always; }
-[data-page-break~=before][data-page-break~=avoid] { page-break-before:  avoid; }
-img[data-page-break~=before]                      { page-break-before:   left; }
-
-
-/*  Custom Styles
-*/
-
+p,blockquote{orphans:2;widows:2;-webkit-hyphens:none;-moz-hyphens:none;hyphens:none}
+figcaption{-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;-webkit-hyphenate-character:"\2010";-webkit-hyphenate-limit-after:1;-webkit-hyphenate-limit-before:3}
+h1,h2,h3,h4,h5,h6,table,img,figure,video,[data-page-break~=inside][data-page-break~=avoid]{page-break-inside:avoid}
+[data-page-break~=after]{page-break-after:always}
+.chap,[data-page-break~=before]{page-break-before:always}
+h1,h2,h3,h4,h5,h6,[data-page-break~=after][data-page-break~=avoid]{page-break-after:avoid}
+[data-page-break~=before][data-page-break~=avoid]{page-break-before:avoid}
+img[data-page-break~=before]{page-break-before:left}
+.chap{margin-bottom:5em;}
+.chap h1{font-size:2.125rem;margin-bottom:1.25em}
+.chap > p:first-of-type{line-height:1.33;font-size:1.125em;}
+.chap p{margin:0;text-indent:1.5em}
+.chap-num{display:block;width:100%;text-indent:1.5em;margin-bottom:.5em;font-size:1.125em;}
